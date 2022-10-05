@@ -1,1 +1,8 @@
-{}
+{
+  "CoreConcepts": {
+    "title": "Core Concepts"
+  },
+  "Layouts": {
+    "title": "Layouts & Flex Box"
+  }
+}
