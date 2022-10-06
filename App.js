@@ -1,42 +1,27 @@
 import { useState } from "react";
-import { StyleSheet, Text, TextInput, View, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Button,
+  FlatList,
+} from "react-native";
+import GoalInput from "./components/GoalInput";
+import GoalItem from "./components/GoalItem";
 
 export default function App() {
-  const [enteredGoal, setEnteredGoal] = useState("");
   const [courseGoals, setCourseGoals] = useState([]);
-  const goalInputHandler = (enteredText) => {
-    setEnteredGoal(enteredText);
-  };
-  const addGoalHandler = () => {
-    setCourseGoals((currentGoals) => [...currentGoals, enteredGoal]);
 
-    // Clear enteredGoal.
-    setEnteredGoal("");
-  };
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Your Course Goal"
-          style={styles.textInput}
-          value={enteredGoal}
-          onChangeText={goalInputHandler}
-        />
-        <Button
-          title="Add Goals"
-          style={styles.button}
-          onPress={addGoalHandler}
-        />
-      </View>
+      <GoalInput setCourseGoals={setCourseGoals} />
       <View style={styles.goalsContainer}>
-        <Text>Course Goals</Text>
-        {courseGoals.map((goal, index) => (
-          <View style={styles.goalItem}>
-            <Text key={index} style={{ color: "#fff" }}>
-              {goal}
-            </Text>
-          </View>
-        ))}
+        <FlatList
+          data={courseGoals}
+          keyExtractor={(item, index) => item.id}
+          renderItem={(itemData) => <GoalItem itemData={itemData} />}
+        />
       </View>
     </View>
   );
@@ -48,36 +33,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     flex: 1,
   },
-  inputContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 24,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-  },
+
   goalsContainer: {
     flex: 5,
-  },
-  textInput: {
-    borderColor: "#ccccc",
-    borderWidth: 1,
-    padding: 10,
-    width: "70%",
-    marginRight: 8,
-    padding: 8,
-  },
-  button: {
-    width: "30%",
-  },
-  goalItem: {
-    marginVertical: 8,
-    padding: 8,
-    backgroundColor: "#5e0acc",
-    borderColor: "black",
-    borderWidth: 1,
-
-    borderRadius: 5,
   },
 });

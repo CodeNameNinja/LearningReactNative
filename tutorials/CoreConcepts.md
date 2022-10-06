@@ -105,6 +105,18 @@ Is used to create scrollable views. This would be the equivalent of a div in HTM
 
 Is used to create lists. This would be the equivalent of a ul in HTML.
 
+Flat list works exactly like scroll view, but lazy loads the items that are not visible on the screen. This is useful when you have a large list of items that you want to display.
+
+How to implement the key extractor prop.
+
+```Js
+<FlatList
+  data={data}
+  renderItem={({ item }) => <Text>{item.key}</Text>}
+  keyExtractor={(item) => item.id}
+/>
+```
+
 <!-- The SectionList Component -->
 
 ```Js
