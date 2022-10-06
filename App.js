@@ -1,18 +1,18 @@
 import { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  Button,
-  FlatList,
-} from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 import GoalInput from "./components/GoalInput";
 import GoalItem from "./components/GoalItem";
 
 export default function App() {
   const [courseGoals, setCourseGoals] = useState([]);
+  const deleteGoalHandler = (item) => {
+    console.log("Delete Goal");
 
+    // Filter out the item that was deleted.
+    setCourseGoals((currentGoals) => {
+      return currentGoals.filter((goal) => goal.id !== item.id);
+    });
+  };
   return (
     <View style={styles.container}>
       <GoalInput setCourseGoals={setCourseGoals} />
@@ -20,7 +20,9 @@ export default function App() {
         <FlatList
           data={courseGoals}
           keyExtractor={(item, index) => item.id}
-          renderItem={(itemData) => <GoalItem itemData={itemData} />}
+          renderItem={(itemData) => (
+            <GoalItem onDelete={deleteGoalHandler} itemData={itemData} />
+          )}
         />
       </View>
     </View>
